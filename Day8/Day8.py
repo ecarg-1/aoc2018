@@ -16,7 +16,7 @@ while i < len(nums):                                                            
         metadata_total += sum(nums[i:i+active_children[-1][1]])                         #the following indicies are metadata and summed
         i += active_children[-1][1] - 2                                                 #increments i by the metadata length (-2 to account for normal inc)
         active_children = active_children[:-1]                                          #removes the child since it's no longer active
-        start_ends.append([starts[-1], i + 1, nums[starts[-1]], nums[starts[-1] + 1]])  #appends [start, end] to start_ends
+        start_ends.append([starts[-1], i + 1, nums[starts[-1] + 1]])                    #appends [start, end] to start_ends
         starts = starts[:-1]                                                            #removes the most recent start since it's done
     else:                                                                               #else the next pair is another child 
         active_children[-1][0] -= 1                                                     #decrements the previous child ct
@@ -29,7 +29,7 @@ class Node:
         self.info = info                #[start, end, children ct, metadata ct]
         self.start = info[0]            #start
         self.end = info[1]              #end
-        self.metadata = info[3]         #metadata ct
+        self.metadata = info[2]         #metadata ct
         self.children = []              #list of child nodes starts empty
         self.parent = []                #parent node starts unknown
         self.score = None               #score starts unknown
@@ -64,5 +64,5 @@ for node in nodes:
 
 while True:
     for node in nodes: node.score_node(nums)
-    if [node.score for node in nodes].count(None) == 0: break
+    if parent.score: break
 print(parent.score)
